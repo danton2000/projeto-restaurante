@@ -1,27 +1,33 @@
-# Importando o arquivo que tem as informações dos itens e preços
-from informacaoes import *
-# Tratando essas informações e inserindo em 2 listas
-itens = aux_itens.split(';\n')
-precos = aux_precos.split('\n')
-
 # Importando a classe Cardapia para pode utilizar seus atributos e metodos
 from cardapio import Cardapio
 
 # Instanciando a classe Cardapio e craindo um obj
 cardapio = Cardapio()
 
-# Percorrendo a lista dos itens e desmembrando ela para pegar cada item e seu indice
-for index, item in enumerate(itens):
-    
-    # Adicionando o item no cardapio e com o preço, uitilizando a lista  de preços e acessando pelo indice do item
-    cardapio.adicionarItem(item, precos[index])
-
 from pedido import Pedido
 
 from cartao import Cartao
 
-while True:
+from cliente import Cliente
 
+
+def inicializa_cardapio():
+    """Esta função utiliza o arquivo arqmenu.json para
+    criar o cardápio com os itens.
+    A função lê o arquivo JSON, instancia um cardápio, popula o cardápio e retorna um cardápio pronto.
+    """
+    import json
+
+    arquivo = open("itens_cardapio.json", "r")
+    dic_temp = json.load(arquivo)
+    arquivo.close()
+
+    cardapio.adicionarItem(list(dic_temp.keys()), list(dic_temp.values()))
+
+    return cardapio
+
+
+while True:
     print("--Menu--")
     print("1 - Adicionar item")
     print("2 - Ver Itens")
@@ -31,17 +37,19 @@ while True:
 
     opcao = input("Digite uma opção: ")
 
-    if(opcao == "1"):
+    inicializa_cardapio()
 
+    if opcao == "1":
         item = input("Digite nome do item: ")
 
         preco = float(input("Digite o preço do item: "))
 
         # Adicionando um pedido manualmente com o preço
-        cardapio.adicionarItem(item, preco)
+        cardapio.adicionarItem(item, preco, 1)
 
-    elif(opcao == "2"):
+        #Verificar o adicionar itens pelo Json
 
+    elif opcao == "2":
         # mostrar cartões
         for cartao in cartao.lista_cartoes:
             print(f"Cartão {cartao.numero}")
@@ -49,10 +57,14 @@ while True:
         # qual o numero do cartao?
         numero_cartao = int(input("Numero do cartão: "))
 
-        #preciso descobrir o obj pelo numero do cartao 
+        # preciso descobrir o obj pelo numero do cartao
         cartao_escolhido = cartao.pegarCartao(numero_cartao)
 
         while True:
+            # Pegando as informações do cliente para vincular ao cartão
+            nome_cliente = input("Nome do Cliente: ")
+
+            telefone_cliente = input("Telefone do Cliente: ")
 
             # Listando todos os itens do cardapio com os preços
             cardapio.listarItens()
@@ -63,7 +75,7 @@ while True:
             # Pegando o item selecionando(pelo indice) utilizando a o metodo da classe Cardapio
             item_escolhido = cardapio.listarItem(item_escolhido)
 
-            #nova instancia para os itens do pedido
+            # nova instancia para os itens do pedido
             pedido = Pedido()
 
             # Escolendo o item para o pedido
@@ -71,40 +83,41 @@ while True:
 
             # Mostrnado o item para o pedido
             pedido.listarItem()
-            
-            #alterando os atributos do cartão escolhido(obj)
+
+            # alterando os atributos do cartão escolhido(obj)
             cartao_escolhido.adicionarPedido(numero_cartao, pedido)
 
             continuar = input("Adicionar mais itens? (s/n): ")
 
-            if continuar == 's':
+            if continuar == "s":
                 continue
             else:
-                break
+                print(cartao_escolhido)
 
+                cliente = Cliente(nome_cliente, telefone_cliente, cartao_escolhido)
+
+                print(cliente)
+                break
 
         print("Pedido Criado:")
         for item_pedido in cartao_escolhido.listarPedido()[1]:
             print(f"Pedido: {cartao_escolhido.listarPedido()[0]} - {item_pedido.item}")
 
-    elif(opcao == "3"):
-
+    elif opcao == "3":
         index = int(input("Remover qual item: "))
 
         # Deletando um item do cardapio
         cardapio.excluirItem(index)
 
-    elif(opcao == "4"):
-        
+    elif opcao == "4":
         qtd_cartoes = int(input("Adicionar quantos cartões ? "))
 
         for x in range(qtd_cartoes):
             cartao = Cartao()
-            
-    elif(opcao == "5"):
 
+    elif opcao == "5":
         for cartao in cartao.lista_cartoes:
             print(f"Cartão {cartao.numero}")
-            
+
     else:
         print("Opção invalida!")
