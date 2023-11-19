@@ -7,19 +7,29 @@ class Cardapio:
     def __init__(self):
         self.itens = []
         self.precos = []
+        self.inicializa_cardapio()
 
-    def adicionarItem(self, item, preco, flag=0):
-        print(flag)
+    def inicializa_cardapio(self):
+        """Este metodo utiliza o arquivo arqmenu.json para
+        criar o cardápio com os itens.
+        A metodo lê o arquivo JSON, instancia um cardápio, popula o cardápio e retorna um cardápio pronto.
+        """
+        import json
 
-        if flag == 1:
-            self.itens.append(item)
+        arquivo = open("itens_cardapio.json", "r")
+        dic_temp = json.load(arquivo)
+        arquivo.close()
 
-            self.precos.append(preco)
-        else:
-            # Dados recebidos pelo Json
-            self.itens = item
+        # print(dic_temp)
 
-            self.precos = preco
+        self.itens = list(dic_temp.keys())
+
+        self.precos = list(dic_temp.values())
+
+    def adicionarItem(self, item, preco):
+        self.itens.append(item)
+
+        self.precos.append(preco)
 
     def listarItens(self):
         print("")

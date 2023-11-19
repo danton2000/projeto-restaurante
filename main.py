@@ -11,22 +11,6 @@ from cartao import Cartao
 from cliente import Cliente
 
 
-def inicializa_cardapio():
-    """Esta função utiliza o arquivo arqmenu.json para
-    criar o cardápio com os itens.
-    A função lê o arquivo JSON, instancia um cardápio, popula o cardápio e retorna um cardápio pronto.
-    """
-    import json
-
-    arquivo = open("itens_cardapio.json", "r")
-    dic_temp = json.load(arquivo)
-    arquivo.close()
-
-    cardapio.adicionarItem(list(dic_temp.keys()), list(dic_temp.values()))
-
-    return cardapio
-
-
 while True:
     print("--Menu--")
     print("1 - Adicionar item")
@@ -37,17 +21,13 @@ while True:
 
     opcao = input("Digite uma opção: ")
 
-    inicializa_cardapio()
-
     if opcao == "1":
         item = input("Digite nome do item: ")
 
         preco = float(input("Digite o preço do item: "))
 
         # Adicionando um pedido manualmente com o preço
-        cardapio.adicionarItem(item, preco, 1)
-
-        #Verificar o adicionar itens pelo Json
+        cardapio.adicionarItem(item, preco)
 
     elif opcao == "2":
         # mostrar cartões
