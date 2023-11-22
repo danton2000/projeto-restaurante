@@ -40,5 +40,6 @@ Você deverá ter um cardápio com itens e bebidas.
 
 obs: Será necessário criar uma classes especilizada pessoa(Herença)Cliente/Funcionario.
 Faltando:
-> Dar baixa nos pedidos
-> Melhor as opções nos menus(mais intuitivo)
+> Dar baixa nos pedidos - ok
+> Melhor as opções nos menus(mais intuitivo) - ok
+> Mostrar intens consumidos(Cliente), nome do item e valores

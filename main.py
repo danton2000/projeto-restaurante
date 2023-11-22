@@ -13,11 +13,12 @@ from cliente import Cliente
 
 while True:
     print("--Menu--")
-    print("1 - Adicionar item")
-    print("2 - Ver Itens")
-    print("3 - Remover item")
-    print("4 - Criar Cartões")
-    print("5 - Ver Cartões")
+    print("1 - Adicionar item cardápio")
+    print("2 - Ver itens do cardápio")
+    print("3 - Fazer Pedidos")
+    print("4 - Remover item cardápio")
+    print("5 - Criar Cartões")
+    print("6 - Ver Cartões")
 
     opcao = input("Digite uma opção: ")
 
@@ -30,9 +31,28 @@ while True:
         cardapio.adicionarItem(item, preco)
 
     elif opcao == "2":
-        # mostrar cartões
+       
+        while True:
+        
+            # Listando todos os itens do cardapio com os preços
+            cardapio.listarItens()
+
+            break
+
+    elif opcao == "3":
+
+        #Verificando se existe cartões instaciados
+        try:
+            cartao.lista_cartoes
+        except:
+            print("Não tem cartões disponiveis no momento.")
+            continue
+
+        # mostrar cartões ATIVO
         for cartao in cartao.lista_cartoes:
-            print(f"Cartão {cartao.numero}")
+
+            if (cartao.ativo == True):
+                print(f"Cartão {cartao.numero}")
 
         # qual o numero do cartao?
         numero_cartao = int(input("Numero do cartão: "))
@@ -40,12 +60,15 @@ while True:
         # preciso descobrir o obj pelo numero do cartao
         cartao_escolhido = cartao.pegarCartao(numero_cartao)
 
+        # Pegando as informações do cliente para vincular ao cartão
+        nome_cliente = input("Nome do Cliente: ")
+
+        telefone_cliente = input("Telefone do Cliente: ")
+
+        # Criando um cliente
+        cliente = Cliente(nome_cliente, telefone_cliente)
+
         while True:
-            # Pegando as informações do cliente para vincular ao cartão
-            nome_cliente = input("Nome do Cliente: ")
-
-            telefone_cliente = input("Telefone do Cliente: ")
-
             # Listando todos os itens do cardapio com os preços
             cardapio.listarItens()
 
@@ -74,28 +97,32 @@ while True:
             else:
                 print(cartao_escolhido)
 
-                cliente = Cliente(nome_cliente, telefone_cliente, cartao_escolhido)
+                cliente.realizarPedido(cartao_escolhido)
 
                 print(cliente)
+
+                #INATIVANDO o cartão após o pedido
+                cartao_escolhido.desativarCartao()
+
                 break
 
         print("Pedido Criado:")
         for item_pedido in cartao_escolhido.listarPedido()[1]:
-            print(f"Pedido: {cartao_escolhido.listarPedido()[0]} - {item_pedido.item}")
+            print(f"Cartão: {cartao_escolhido.listarPedido()[0]} - {item_pedido.item}")
 
-    elif opcao == "3":
+    elif opcao == "4":
         index = int(input("Remover qual item: "))
 
         # Deletando um item do cardapio
         cardapio.excluirItem(index)
 
-    elif opcao == "4":
+    elif opcao == "5":
         qtd_cartoes = int(input("Adicionar quantos cartões ? "))
 
         for x in range(qtd_cartoes):
             cartao = Cartao()
 
-    elif opcao == "5":
+    elif opcao == "6":
         for cartao in cartao.lista_cartoes:
             print(f"Cartão {cartao.numero}")
 

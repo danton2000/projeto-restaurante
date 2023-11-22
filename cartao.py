@@ -20,7 +20,7 @@ class Cartao():
 
     def desativarCartao(self):
 
-        pass
+        self.ativo = False
 
     def pegarCartao(self, numero):
 
