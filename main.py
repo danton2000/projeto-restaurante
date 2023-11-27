@@ -95,11 +95,11 @@ while True:
             if continuar == "s":
                 continue
             else:
-                print(cartao_escolhido)
+                #print(cartao_escolhido)
 
                 cliente.realizarPedido(cartao_escolhido)
 
-                print(cliente)
+                #print(cliente)
 
                 #INATIVANDO o cartão após o pedido
                 cartao_escolhido.desativarCartao()
@@ -107,8 +107,11 @@ while True:
                 break
 
         print("Pedido Criado:")
-        for item_pedido in cartao_escolhido.listarPedido()[1]:
-            print(f"Cartão: {cartao_escolhido.listarPedido()[0]} - {item_pedido.item}")
+        # for item_pedido in cartao_escolhido.listarPedido()[1]:
+        #     print(f"Cartão: {cartao_escolhido.listarPedido()[0]} - {item_pedido.item}")
+        print("Itens Consumidos:")
+        cliente.finalizarConsumo(cartao_escolhido.listarPedido())
+
 
     elif opcao == "4":
         index = int(input("Remover qual item: "))

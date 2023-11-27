@@ -42,4 +42,5 @@ obs: Será necessário criar uma classes especilizada pessoa(Herença)Cliente/Fu
 Faltando:
 > Dar baixa nos pedidos - ok
 > Melhor as opções nos menus(mais intuitivo) - ok
-> Mostrar intens consumidos(Cliente), nome do item e valores
+> Mostrar intens consumidos(Cliente), nome do item e valores - ok
+> Classe Escpecialziada Pessoa(Herança)
